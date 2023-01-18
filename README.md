@@ -1,1 +1,1 @@
-# Computer-Graphics-Activites-and-Lab
+# Intermediate Graphics Lab 1
