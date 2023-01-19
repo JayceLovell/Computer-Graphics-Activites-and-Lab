@@ -294,8 +294,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 0.0,
-            "y": 200.0
+            "x": -0.00001430511474609375,
+            "y": 201.0
         },
         "m_Blocks": [
             {
@@ -724,9 +724,6 @@
     "m_Name": "",
     "m_ChildObjectList": [
         {
-            "m_Id": "57dc881a1f3a46159ed9c8b7474a4e37"
-        },
-        {
             "m_Id": "9c4f3984112a476dab7460bb25793ddc"
         },
         {
@@ -734,6 +731,9 @@
         },
         {
             "m_Id": "2da2a7caee894d9d8223e6babe9c042d"
+        },
+        {
+            "m_Id": "57dc881a1f3a46159ed9c8b7474a4e37"
         }
     ]
 }
@@ -974,7 +974,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": 0.0,
-    "m_FloatType": 0,
+    "m_FloatType": 1,
     "m_RangeValues": {
         "x": 0.0,
         "y": 1.0

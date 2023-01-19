@@ -52,10 +52,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Float: 0
     - _LERP: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _REPLACE_COLOR: 0
     - _SWITCH: 1
     - _isPosition: 1
-    m_Colors: []
+    m_Colors:
+    - _Color: {r: 0, g: 0, b: 0, a: 0}
+    - _MoveObject: {r: 3.68, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
