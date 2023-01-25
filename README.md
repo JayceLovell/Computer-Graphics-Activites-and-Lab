@@ -1,3 +1,2 @@
-# Computer-Graphics-Activites-and-Lab
+# Lab 2
 ---
- - [Lab01](https://github.com/JayceLovell/Computer-Graphics-Activites-and-Lab/tree/Lab-1)
