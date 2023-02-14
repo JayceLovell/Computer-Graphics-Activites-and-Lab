@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Controller : MonoBehaviour
 {
     public Material Shield;
     public Material DefaultMaterial;
+    public GameObject Plane;
     private Vector2 moveInput = Vector2.zero;
     Rigidbody _rigidbody;
     float PlayerSpeed = 5f;
+    bool toggle;
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -42,7 +45,12 @@ public class Controller : MonoBehaviour
     }
     void OnTwo()
     {
+        if(toggle)
+            Plane.GetComponent<Renderer>().sharedMaterial.color = Color.green;
+        else
+            Plane.GetComponent<Renderer>().sharedMaterial.color = Color.red;
 
+        toggle = !toggle;
     }
     void OnThree()
     {

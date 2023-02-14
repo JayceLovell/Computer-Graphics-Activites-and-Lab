@@ -132,6 +132,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9cc688a4-0aa5-4942-887f-10985904f61f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Two",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "da5a733f-5e48-4d3a-9cef-9f12186ebeb8",
                     "path": "<Keyboard>/3",
                     "interactions": "",

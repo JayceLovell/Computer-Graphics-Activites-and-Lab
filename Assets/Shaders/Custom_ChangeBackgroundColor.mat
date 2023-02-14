@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ChangingBackground
+  m_Name: Custom_ChangeBackgroundColor
   m_Shader: {fileID: 4800000, guid: be4b5b44f5401764d87c1f6dffb2176e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -20,12 +20,15 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _myCube:
-        m_Texture: {fileID: 8900000, guid: 3eb644d923db14f4fae6fcfa02ccf804, type: 2}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: ddcac1fac1f5c8943a30c2ef6b724062, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Emission: 0.211
+    - _Glossiness: 0.5
+    - _Metallic: 0
     m_Colors:
-    - _myColor: {r: 1, g: 0.6236605, b: 0, a: 1}
+    - _Color: {r: 0, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
