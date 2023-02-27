@@ -2,64 +2,70 @@ Shader "Custom/WaterShader"
 {
     Properties
     {
-        _Color ("Color", Color) = (1,1,1,1)
-        _MainTex ("Albedo", 2D) = "white" {}
-        _DisplacementMap("DisplacementMap",2D)="black"{}
+        _Color ("Color", Color) = (1,1,1,1)        
         _DisplacementStrength("Displacement Strength", Range(0.0,1.0))=0.5
         _WaveFrequency("Wave Frequency", Range(0.1,10.0))=1.0
-        _WaveSpeed("Wave Speed", Range(0.1,10.0))=1.0
-        _WaveAmplitude("Wave Amplitude", Range(0.0,1.0))=0.1
+        _WaveSpeed("Wave Speed", Range(0.1,10.0))=2.0
+        _WaveAmplitude("Wave Amplitude", Range(0.0,1.0))=0.2
     }
     SubShader
     {
-        Tags {"Queue"="Transparent" "RenderType"="Opaque" }
-        LOD 100
-
-        CGPROGRAM
-
-        #pragma surface surf Standard alpha
-        #pragma target 3.0
-        #pragma vertex vert
-        #pragma fragment frag
-        #pragma multi_compile_fog
-        #include "UnityCG.cginc"
-
-        struct Input
+        pass
         {
-            float2 uv_MainTex;
-            float2 uv_DisplacementMap;
-        };
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_fog
+            #include "UnityCG.cginc"
 
-        sampler2D _MainTex;
-        sampler2D _DisplacementMap;
-        float4 _MainTex_ST;
-        float4 _DisplacementMap_ST;
-        float _DisplacementStrength;
-        float _WaveFrequency;
-        float _WaveSpeed;
-        float _WaveAmplitude;
+            struct Input
+            {
+            };
 
-        void vert(inout appdata_full v, out Input o)
-        {
-            UNITY_INITIALIZE_OUTPUT(Input, o);
-            o.uv_MainTex = TRANSFORM_TEX(v.texcoord, _MainTex);
-            o.uv_DisplacementMap = TRANSFORM_TEX(v.texcoord, _DisplacementMap);
+            struct appdata{
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+                float3 normal : NORMAL;
+            };
 
-            float time = _Time.y;
+            struct v2f
+            {
+                float2 uv :TEXCOORD0;
+                UNITY_FOG_COORDS(1)
+                float4 vertex : SV_POSITION;
+                float4 color:COLOR;
+            };
+           
+            half _DisplacementStrength;
+            float _WaveFrequency;
+            float _WaveSpeed;
+            float _WaveAmplitude;
+            float4 _Color;
 
-            float waveDisplacement = sin((v.vertex.x * _WaveFrequency) + (time * _WaveSpeed)) * _WaveAmplitude;
+            v2f vert(appdata v){
+                v2f o;
+                
+                o.uv = v.uv;               
+                UNITY_TRANSFER_FOG(o,o.vertex);
+                
+                 float time = _Time.y;
 
-            v.vertex.xyz += v.normal * waveDisplacement;
+                float waveDisplacement = sin((v.vertex.x * _WaveFrequency) + (time * _WaveSpeed)) * _WaveAmplitude;
+
+                v.vertex.xyz += v.normal * waveDisplacement;
+
+                float4 temp = float4(v.vertex.x,v.vertex.y,v.vertex.z,1.0);                
+                temp.xyz += waveDisplacement * v.normal * _DisplacementStrength;
+                o.vertex = UnityObjectToClipPos(temp);
+                return o;
+            }
+
+            fixed4 frag(v2f i):SV_Target{                
+                fixed4 col= _Color;
+                UNITY_APPLY_FOG(i.fogCoord,col)
+                return col;
+            }
+            ENDCG
         }
-
-        fixed4 frag (Input IN, SurfaceOutputStandard o)
-        {
-            fixed4 col = tex2D(_MainTex, IN.uv_MainTex);
-            col.a = o.Alpha;
-            UNITY_APPLY_FOG_COLOR(o.fogCoord, col, fixed4(0,0,0,0));
-            return col;
-        }
-        ENDCG
     }
-    FallBack "Diffuse"
 }
