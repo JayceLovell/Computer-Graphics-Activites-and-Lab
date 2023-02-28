@@ -28,6 +28,8 @@ Material:
     m_Floats:
     - _YPOS: 1.51
     m_Colors:
-    - _AboveColor: {r: 1, g: 0, b: 0, a: 1}
+    - _AboveColor: {r: 1, g: 1, b: 1, a: 1}
     - _BelowColor: {r: 0, g: 0, b: 1, a: 1}
+    - _MainColor: {r: 0, g: 0.06844139, b: 1, a: 1}
+    - _OtherColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
