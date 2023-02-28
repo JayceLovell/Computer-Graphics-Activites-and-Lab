@@ -1,7 +1,6 @@
 Shader "Custom/Output the dot product between the world normal and view direction"
 {
-    Properties {
-    }
+
  
     SubShader {
         Pass {
@@ -9,7 +8,8 @@ Shader "Custom/Output the dot product between the world normal and view directio
             #pragma vertex vert
             #pragma fragment frag
  
-            #include "UnityCG.cginc"
+            //#include "UnityCG.cginc"
+            #include "UnityStandardCore.cginc"
  
             struct appdata {
                 float4 vertex : POSITION;
@@ -17,22 +17,24 @@ Shader "Custom/Output the dot product between the world normal and view directio
             };
  
             struct v2f {
-                float3 worldNormal : TEXCOORD0;
-                float3 viewDir : TEXCOORD1;
+                float3 viewDir : TEXCOORD0;
+                float3 worldNormal : TEXCOORD1;
                 float4 vertex : SV_POSITION;
             };
+ 
+            uniform float4x4 _ViewMatrix;
  
             v2f vert (appdata v) {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.worldNormal = normalize(mul(UNITY_MATRIX_M, v.normal)).xyz;
-                o.viewDir = normalize(UnityWorldSpaceViewDir(v.vertex)).xyz;
+                o.viewDir = normalize(UnityWorldSpaceViewDir(v.vertex.xyz));
+                o.worldNormal = normalize(UnityObjectToWorldNormal(v.vertex));
                 return o;
             }
  
             fixed4 frag (v2f i) : SV_Target {
-                float dotProduct = dot(i.worldNormal, i.viewDir);
-                return fixed4(dotProduct, dotProduct, dotProduct, 1.0);
+                 float3 albedo = dot(i.viewDir,i.worldNormal);
+                return fixed4(albedo,1);
             }
             ENDCG
         }

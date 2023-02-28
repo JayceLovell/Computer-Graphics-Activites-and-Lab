@@ -1,15 +1,13 @@
 Shader "Custom/Output the normalize world position"
 {
-    Properties {
-        _MainTex ("Texture", 2D) = "white" {}
-    }
- 
     SubShader {
         Pass {
             CGPROGRAM
+            // Vertex shader
             #pragma vertex vert
+            // Fragment shader
             #pragma fragment frag
- 
+            // Include file for commonly used Unity shader code
             #include "UnityCG.cginc"
  
             struct appdata {
@@ -25,12 +23,12 @@ Shader "Custom/Output the normalize world position"
             v2f vert (appdata v) {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.worldPos = normalize(mul(UNITY_MATRIX_M, v.worldPos));
+                o.worldPos = normalize(mul(unity_ObjectToWorld, v.vertex).xyz);
                 return o;
             }
  
             fixed4 frag (v2f i) : SV_Target {
-                return fixed4(i.worldPos, 1.0);
+                return fixed4(i.worldPos, 1);
             }
             ENDCG
         }

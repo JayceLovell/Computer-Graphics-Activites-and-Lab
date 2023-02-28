@@ -1,8 +1,5 @@
 Shader "Custom/Output View Direction"
 {
-    Properties {
-        _MainTex ("Texture", 2D) = "white" {}
-    }
  
     SubShader {
         Pass {
@@ -27,7 +24,7 @@ Shader "Custom/Output View Direction"
             v2f vert (appdata v) {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.viewDir = normalize(mul(_ViewMatrix, v.worldPos).xyz - _WorldSpaceCameraPos.xyz);
+                o.viewDir = normalize(UnityWorldSpaceViewDir(v.vertex.xyz));
                 return o;
             }
  
