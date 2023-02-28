@@ -1,7 +1,6 @@
 Shader "Custom/Output the dot product between the world normal and view direction"
 {
     Properties {
-        _MainTex ("Texture", 2D) = "white" {}
     }
  
     SubShader {
