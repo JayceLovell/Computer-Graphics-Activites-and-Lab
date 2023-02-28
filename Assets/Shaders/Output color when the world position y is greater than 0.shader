@@ -34,7 +34,7 @@ Shader "Custom/Output color when the world position y is greater than 0"
             }
  
             fixed4 frag (v2f i) : SV_Target {
-                if (i.worldPos.y > 0.0) {
+                if (i.worldPos.y < 0.0 || 0.0 > i.worldPos.y) {
                     return _AboveColor;
                 }
                 else {
