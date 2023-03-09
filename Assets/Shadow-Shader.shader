@@ -2,10 +2,8 @@ Shader "Custom/Shadow-Shader"
 {
     Properties
     {
-        _Color ("Color", Color) = (1,1,1,1)
-        _MainTex ("Albedo (RGB)", 2D) = "white" {}
-        _Glossiness ("Smoothness", Range(0,1)) = 0.5
-        _Metallic ("Metallic", Range(0,1)) = 0.0
+        _MainTex("Albedo RGB",2D)="White"{}
+        _ShadowImage ("ShadowImage", 2D) = "white" {}
     }
     SubShader{
         
@@ -50,17 +48,30 @@ Shader "Custom/Shadow-Shader"
             }
 
             sampler2D _MainTex;
-            float4 _Color;
+            sampler2D _ShadowImage;
 
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 fixed shadow = SHADOW_ATTENUATION(i);
-                col.rgb *= i.diff * shadow;
+                col.rgb *= i.diff;
+                fixed4 finalColour = fixed4(0.0f,0.0f,0.0f,1.0f);
+                //For submission remove if statements
+                if(shadow){
+                    finalColour = col;
+                }else{
+                //Here to apply the texture instead of color for lab assignment
+                    finalColour = fixed4(0.0f,1.0f,1.0f,1.0f);
+                }
+
+                // think have to use this fixed4 shadowColour = tex2D(_shadowTex, i.uv * _linesZoom);
                 
+                return finalColour;
                 //col.rgb = shadowColour;
+
+                //col.rgb=shadow;
                 //col *= 0.0f;
-                return col;
+                //return col;
             }
         ENDCG
         }
