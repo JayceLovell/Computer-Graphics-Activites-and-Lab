@@ -4,6 +4,7 @@ Shader "Custom/Shadow-Shader"
     {
         _MainTex("Albedo RGB",2D)="White"{}
         _ShadowImage ("ShadowImage", 2D) = "white" {}
+        _linesZoom("Lines Zoom", Range(0.0, 10.0)) = 1.0
     }
     SubShader{
         
@@ -49,20 +50,28 @@ Shader "Custom/Shadow-Shader"
 
             sampler2D _MainTex;
             sampler2D _ShadowImage;
+            float _linesZoom;
 
             fixed4 frag(v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 fixed shadow = SHADOW_ATTENUATION(i);
-                col.rgb *= i.diff;
-                fixed4 finalColour = fixed4(0.0f,0.0f,0.0f,1.0f);
+                col.rgb *= i.diff;               
+
+                fixed4 finalColour = lerp(tex2D(_ShadowImage, i.uv * _linesZoom),col, shadow);
+
+                finalColour.a = col.a;
+
+                //fixed4 finalColour = fixed4(0.0f,0.0f,0.0f,1.0f);
                 //For submission remove if statements
-                if(shadow){
-                    finalColour = col;
-                }else{
-                //Here to apply the texture instead of color for lab assignment
-                    finalColour = fixed4(0.0f,1.0f,1.0f,1.0f);
-                }
+                //if(shadow){
+                //    finalColour = col;
+                //}else{
+                ////Here to apply the texture instead of color for lab assignment
+                //    //finalColour = fixed4(0.0f,1.0f,1.0f,1.0f);
+                //    finalColour.rgb = tex2D(_ShadowImage, i.uv).rgb;
+                //    finalColour.a = col.a;
+                //}
 
                 // think have to use this fixed4 shadowColour = tex2D(_shadowTex, i.uv * _linesZoom);
                 
