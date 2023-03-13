@@ -56,31 +56,19 @@ Shader "Custom/Shadow-Shader"
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 fixed shadow = SHADOW_ATTENUATION(i);
-                col.rgb *= i.diff;               
+                fixed4 shadowTex = tex2D(_ShadowImage, i.uv * _linesZoom);
 
-                fixed4 finalColour = lerp(tex2D(_ShadowImage, i.uv * _linesZoom),col, shadow);
+                col.rgb *= i.diff;
+
+                //remove white lines froms shadow texture
+                shadowTex.rgb *= col.rgb;                
+                
+                //No more if statement required
+                fixed4 finalColour = lerp( shadowTex,col, shadow);
 
                 finalColour.a = col.a;
-
-                //fixed4 finalColour = fixed4(0.0f,0.0f,0.0f,1.0f);
-                //For submission remove if statements
-                //if(shadow){
-                //    finalColour = col;
-                //}else{
-                ////Here to apply the texture instead of color for lab assignment
-                //    //finalColour = fixed4(0.0f,1.0f,1.0f,1.0f);
-                //    finalColour.rgb = tex2D(_ShadowImage, i.uv).rgb;
-                //    finalColour.a = col.a;
-                //}
-
-                // think have to use this fixed4 shadowColour = tex2D(_shadowTex, i.uv * _linesZoom);
                 
-                return finalColour;
-                //col.rgb = shadowColour;
-
-                //col.rgb=shadow;
-                //col *= 0.0f;
-                //return col;
+                return finalColour;                
             }
         ENDCG
         }
