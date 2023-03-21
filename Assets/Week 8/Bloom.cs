@@ -8,9 +8,22 @@ using static Unity.VisualScripting.Member;
 public class Bloom : MonoBehaviour
 {
     // Start is called before the first frame update
+    const int BoxDownpass = 0;
+    const int BoxUpPass = 1;
+    const int ApplyBloomPass = 3;
+    const int BoxDownPrefilterPass = 0;    
+    const int DebugBloomPass = 4;
+
     public Shader bloomShader;
+    public bool debug;
+    public float intensity;
+
     [Range(1, 16)]
     public int iterations = 4;
+
+    [Range(0, 10)]
+    public float threshold = 1;
+
     RenderTexture[] textures = new RenderTexture[16];
     [NonSerialized]
     Material bloom;
@@ -21,6 +34,8 @@ public class Bloom : MonoBehaviour
             bloom = new Material(bloomShader);
             bloom.hideFlags = HideFlags.HideAndDontSave;
         }
+        bloom.SetFloat("_Threshold", threshold);
+        bloom.SetFloat("_Intensity", Mathf.GammaToLinearSpace(intensity));
         int width = source.width / 2;
         int height = source.height / 2;
 
@@ -51,8 +66,16 @@ public class Bloom : MonoBehaviour
             RenderTexture.ReleaseTemporary(currentSource);
             currentSource = currentDestination;
         }
+        
+        if (debug)        
+            Graphics.Blit(currentSource, destination, bloom,DebugBloomPass);
+        else
+        {
+            bloom.SetTexture("_SourceTex", currentSource);
+            Graphics.Blit(source, destination, bloom, ApplyBloomPass);
+        }
+        
 
-        Graphics.Blit(currentSource, destination, bloom);
         RenderTexture.ReleaseTemporary(currentSource);
     }
 }

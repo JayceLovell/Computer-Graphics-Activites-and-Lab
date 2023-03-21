@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 1387637006}
   - component: {fileID: 1387637007}
   - component: {fileID: 1387637008}
+  - component: {fileID: 1387637009}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -287,7 +288,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -343,13 +344,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387637001}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2838ade972d86644e879f7d7eaf1d485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bloomShader: {fileID: 4800000, guid: 50be87ac9cf659c4cba7641d025421d3, type: 3}
-  iterations: 4
+  debug: 0
+  intensity: 6.43
+  iterations: 2
+  threshold: 0.84
 --- !u!124 &1387637008
 Behaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +361,23 @@ Behaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387637001}
+  m_Enabled: 0
+--- !u!114 &1387637009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387637001}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2adc09bc6b7c3a743b328c351584ebc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dofShader: {fileID: 4800000, guid: fcc5695ca55a9324d8a8d517c52e82f3, type: 3}
+  focusDistance: 10.5
+  focusRange: 10
+  bokehRadius: 10
 --- !u!1 &1466535656
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,8 @@ Shader "Custom/Bloom" {
 		sampler2D _MainTex, _SourceTex;
 		float4 _MainTex_TexelSize;
 
+		half _Threshold;
+
 		struct VertexData {
 			float4 vertex : POSITION;
 			float2 uv : TEXCOORD0;
@@ -22,8 +24,7 @@ Shader "Custom/Bloom" {
 			i.pos = UnityObjectToClipPos(v.vertex);
 			i.uv = v.uv;
 			return i;
-		}
-
+		}		
 		half Sample(float2 uv){
 			return tex2D(_MainTex, uv).rgb;
 		}
@@ -34,6 +35,12 @@ Shader "Custom/Bloom" {
 				Sample(uv + o.xw) + Sample(uv + o.zw);
 			return s * 0.25f;
 		}
+		half3 Prefilter(half3 c){
+			half brightness = max(c.r,max(c.g,c.b));
+			half contribution = max(0,brightness - _Threshold);
+			contribution /= max(brightness, 0.00001);
+			return c * contribution;
+		}
 		ENDCG
 
 	SubShader {
@@ -41,12 +48,35 @@ Shader "Custom/Bloom" {
 		ZTest Always
 		ZWrite Off
 
-		Pass {
+		Pass {//0
 			CGPROGRAM
 				#pragma vertex VertexProgram
 				#pragma fragment FragmentProgram
-				half4 FragmentProgram (Interpolators i) : SV_Target {
-					return half4(SampleBox(i.uv,1), 1);
+				half4 FragmentProgram (Interpolators i) : SV_Target {					
+					return half4(SampleBox(i.uv,1),1);
+				}
+			ENDCG
+		}
+		Pass{//1
+			Blend One One
+
+			CGPROGRAM
+				#pragma vertex VertexProgram
+				#pragma fragment FragmentProgram
+				half4 FragmentProgram(Interpolators i) : SV_Target{
+					return half4(SampleBox(i.uv,0.5),1);
+					}
+				ENDCG
+		}
+		Pass{//2
+			CGPROGRAM
+				#pragma vertex VertexProgram
+				#pragma fragment FragmentProgram
+
+				half4 FragmentProgram(Interpolators i) : SV_Target{
+					half4 c = tex2D(_SourceTex, i.uv);
+					c.rgb += SampleBox(i.uv,0.5);
+					return c;
 				}
 			ENDCG
 		}
@@ -54,8 +84,9 @@ Shader "Custom/Bloom" {
 			CGPROGRAM
 				#pragma vertex VertexProgram
 				#pragma fragment FragmentProgram
+
 				half4 FragmentProgram(Interpolators i) : SV_Target{
-					return half4(SampleBox(i.uv,1),1);
+					return half4(SampleBox(i.uv, 0.5),1);
 				}
 				ENDCG
 		}
