@@ -33,15 +33,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _myBump:
-        m_Texture: {fileID: 2800000, guid: 1a71d5a6e0562744db27802aa413ab96, type: 3}
+        m_Texture: {fileID: 2800000, guid: fababac60860c2748b937dce07c5ef27, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _myDiffuse:
-        m_Texture: {fileID: 2800000, guid: eba1b3601dc8ccf48859625e8040842e, type: 3}
+        m_Texture: {fileID: 2800000, guid: e0ce37b698540f74a82b459f1073068f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _mySlider: 5.1
+    - _mySlider: 0
     m_Colors: []
   m_BuildTextureStacks: []
