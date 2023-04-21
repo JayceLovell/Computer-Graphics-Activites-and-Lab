@@ -2,7 +2,7 @@
 ![image](https://user-images.githubusercontent.com/19291090/233713223-e539b58c-9529-4e6b-bfd3-15e1bd894145.png)  
 ## Mine  
 ![Untitled video - Made with Clipchamp](https://user-images.githubusercontent.com/19291090/233714135-a1bc86e1-9b76-46e7-bb60-903987b3b3a2.gif)  
-[Download here if Release doesn't work](https://github.com/JayceLovell/Computer-Graphics-Activites-and-Lab/releases/download/Final/Final.Exam.zip)
+[Download here if Release doesn't work](https://github.com/JayceLovell/Computer-Graphics-Activites-and-Lab/releases/download/Final/Final.zip)
 ## Controls
 Movement AWSD
 1 to toggle lava  
